@@ -1,28 +1,77 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="row justify-content-center my-5">
+    <ul class="">
+      <li class="">
+      <div class="notes">
+        <div class="notes-header">
+          Quinta-feira, 05 Março, 2020 at 9:16 PM
+          <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
+          <button class="float-right btn-sm" @click="addNote"> <i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <textarea name="new-note" v-model="newNote" id="" cols="30" rows="10"></textarea>
+      </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import db from '@/firebase/init'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return {
+      newNote: null,
+    }
+  },
+  methods:  {
+    addNote(){
+      if(this.newNote){
+        db.collection('notes').add({
+          content: this.newNote,
+          timestamp: Date.now()
+        }).catch(err => {
+          console.log(err);
+        })
+        this.newNote = null
+        console.log("Succesfully");
+        
+      }else{
+        console.log("error");
+        
+      }
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app{
+    
+  }
+  ul {
+     list-style-type: none;
+  }
+  .notes {
+    width: 560px;
+    background: #eee;
+    box-shadow: #999 1px 1px 3px;
+    margin: 30px 0;
+    min-height: 200px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+  }
+  .notes-header{
+    line-height: 1.15;
+    padding: 10px 10px;
+    font-family: sans-serif;
+    font-size: 0.7em;
+    font-style: italic;
+    color: #71CBD0;
+  }
+  textarea{
+    width: 100%;
+    min-height: 200px;
+  }
 </style>
