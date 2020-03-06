@@ -3,7 +3,7 @@
     <div class="row">
       <div class="notes">
           <div class="notes-header">
-            Quinta-feira, 05 Março, 2020 at 9:16 PM
+            Create new note
             <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
             <button class="float-right btn-sm" @click="addNote"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
@@ -17,7 +17,7 @@
         <div class="notes">
           <div class="notes-header">
             {{notes.timestamp}}
-            <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
+            <button class="float-right btn-sm" @click="deleteItem(notes.id)"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
             <button class="float-right btn-sm"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
           <textarea name="" id="" cols="30" rows="10" v-model="notes.content"></textarea>
@@ -55,6 +55,10 @@ export default {
         console.log("error");
         
       }
+    },
+    deleteItem(id){
+      db.collection('notes').doc(id).delete();
+      
     }
   },
   created(){
