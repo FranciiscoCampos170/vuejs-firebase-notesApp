@@ -1,17 +1,30 @@
 <template>
   <div id="app" class="row justify-content-center my-5">
-    <ul class="">
-      <li class="">
+    <div class="row">
       <div class="notes">
-        <div class="notes-header">
-          Quinta-feira, 05 Março, 2020 at 9:16 PM
-          <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
-          <button class="float-right btn-sm" @click="addNote"> <i class="fa fa-check" aria-hidden="true"></i></button>
+          <div class="notes-header">
+            Quinta-feira, 05 Março, 2020 at 9:16 PM
+            <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
+            <button class="float-right btn-sm" @click="addNote"> <i class="fa fa-check" aria-hidden="true"></i></button>
+          </div>
+          <textarea name="new-note" v-model="newNote" id="" cols="30" rows="10"></textarea>
         </div>
-        <textarea name="new-note" v-model="newNote" id="" cols="30" rows="10"></textarea>
-      </div>
-      </li>
-    </ul>
+    </div>
+
+  <div class="row">
+      <ul class="">
+        <li class="" v-for="notes in notes" :key="notes.id">
+        <div class="notes">
+          <div class="notes-header">
+            Quinta-feira, 05 Março, 2020 at 9:16 PM {{notes.timestamp}}
+            <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
+            <button class="float-right btn-sm"> <i class="fa fa-check" aria-hidden="true"></i></button>
+          </div>
+          <textarea name="" id="" cols="30" rows="10" ></textarea>
+        </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -22,6 +35,7 @@ export default {
   data(){
     return {
       newNote: null,
+      notes: []
     }
   },
   methods:  {
@@ -41,6 +55,21 @@ export default {
         
       }
     }
+  },
+  created(){
+    let ref = db.collection('notes').orderBy('timestamp')
+    ref.onSnapshot(snapShot => {
+      snapShot.docChanges().forEach(change => {
+        if (change.type == 'added') {
+          let doc = change.doc
+          this.notes.push({
+            id: doc.id,
+            content: doc.data().content,
+            timestamp: doc.data().timestamp
+          })
+        }
+      });
+    })
   }
 }
 </script>
