@@ -20,7 +20,7 @@
             <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
             <button class="float-right btn-sm"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
-          <textarea name="" id="" cols="30" rows="10" ></textarea>
+          <textarea name="" id="" cols="30" rows="10" v-model="notes.content"></textarea>
         </div>
         </li>
       </ul>
