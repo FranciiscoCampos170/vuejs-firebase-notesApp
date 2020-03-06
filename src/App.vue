@@ -16,7 +16,7 @@
         <li class="" v-for="notes in notes" :key="notes.id">
         <div class="notes">
           <div class="notes-header">
-            Quinta-feira, 05 Março, 2020 at 9:16 PM {{notes.timestamp}}
+            {{notes.timestamp}}
             <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
             <button class="float-right btn-sm"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
@@ -30,6 +30,7 @@
 
 <script>
 import db from '@/firebase/init'
+import moment from 'moment'
 export default {
   name: 'App',
   data(){
@@ -65,7 +66,7 @@ export default {
           this.notes.push({
             id: doc.id,
             content: doc.data().content,
-            timestamp: doc.data().timestamp
+            timestamp: moment(doc.data().timestamp).format('LLLL')
           })
         }
       });
