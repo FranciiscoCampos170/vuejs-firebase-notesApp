@@ -62,7 +62,7 @@ export default {
     updateItem(id){
         
         db.collection('notes').doc(id).update({
-          content: "notes.content"
+          content: notes.content
         }).catch(err => {
           console.log(err);
         })
