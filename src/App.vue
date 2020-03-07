@@ -18,7 +18,7 @@
           <div class="notes-header">
             {{notes.timestamp}}
             <button class="float-right btn-sm" @click="deleteItem(notes.id)"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
-            <button class="float-right btn-sm"> <i class="fa fa-check" aria-hidden="true"></i></button>
+            <button class="float-right btn-sm" @click=" updateItem(notes.id)"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
           <textarea name="" id="" cols="30" rows="10" v-model="notes.content"></textarea>
         </div>
@@ -49,16 +49,24 @@ export default {
           console.log(err);
         })
         this.newNote = null
-        console.log("Succesfully");
+        console.log("Note Created");
         
       }else{
-        console.log("error");
+        console.log("created error");
         
       }
     },
     deleteItem(id){
       db.collection('notes').doc(id).delete();
-      
+    },
+    updateItem(id){
+        
+        db.collection('notes').doc(id).update({
+          content: "notes.content"
+        }).catch(err => {
+          console.log(err);
+        })
+        console.log("Note Updated");
     }
   },
   created(){
