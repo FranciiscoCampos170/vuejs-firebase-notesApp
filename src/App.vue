@@ -18,9 +18,9 @@
           <div class="notes-header">
             {{notes.timestamp}}
             <button class="float-right btn-sm" @click="deleteItem(notes.id)"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
-            <button class="float-right btn-sm" @click=" updateItem(notes.id)"> <i class="fa fa-check" aria-hidden="true"></i></button>
+            <button class="float-right btn-sm" @click=" updateItem(notes.id, notes.content)"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
-          <textarea name="" id="" cols="30" rows="10" v-model="notes.content"></textarea>
+          <textarea name="note" id="" cols="30" rows="10" v-model="notes.content"></textarea>
         </div>
         </li>
       </ul>
@@ -59,14 +59,15 @@ export default {
     deleteItem(id){
       db.collection('notes').doc(id).delete();
     },
-    updateItem(id){
-        
+    updateItem(id, myContent){
+      //console.log(this.content);
         db.collection('notes').doc(id).update({
-          content: notes.content
+          content: myContent
         }).catch(err => {
           console.log(err);
         })
         console.log("Note Updated");
+        
     }
   },
   created(){
