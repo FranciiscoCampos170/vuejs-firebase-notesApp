@@ -1,24 +1,24 @@
 <template>
-  <div id="app" class="row justify-content-center my-5">
-    <div class="row">
+  <div id="app">
+    
+    <div class="row justify-content-center my-5" >
       <div class="notes">
           <div class="notes-header">
             Create new note
-            <button class="float-right btn-sm"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
-            <button class="float-right btn-sm" @click="addNote"> <i class="fa fa-check" aria-hidden="true"></i></button>
+               <button class="float-right btn-sm" @click="addNote"> <i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
-          <textarea name="new-note" v-model="newNote" id="" cols="30" rows="10"></textarea>
+          <textarea name="new-note" v-model="newNote" class="newNote"></textarea>
         </div>
     </div>
 
-  <div class="row">
-      <ul class="">
-        <li class="" v-for="notes in notes" :key="notes.id">
+  <div class="row justify-content-center my-5">
+      <ul class="list-group">
+        <li class="list-group-item" v-for="notes in notes" :key="notes.id">
         <div class="notes">
           <div class="notes-header">
             {{notes.timestamp}}
-            <button class="float-right btn-sm" @click="deleteItem(notes.id)"> <i class="fas fa-trash" aria-hidden="true" ></i></button>
-            <button class="float-right btn-sm" @click=" updateItem(notes.id, notes.content)"> <i class="fa fa-check" aria-hidden="true"></i></button>
+            <button class="float-right btn-sm" @click="deleteItem(notes.id)"> <i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button class="float-right btn-sm btnsimple" @click=" updateItem(notes.id, notes.content)"> <i class="fa fa-refresh" aria-hidden="true"></i></button>
           </div>
           <textarea name="note" id="" cols="30" rows="10" v-model="notes.content"></textarea>
         </div>
@@ -92,6 +92,7 @@ export default {
   #app{
     
   }
+  
   ul {
      list-style-type: none;
   }
@@ -100,7 +101,7 @@ export default {
     background: #eee;
     box-shadow: #999 1px 1px 3px;
     margin: 30px 0;
-    min-height: 200px;
+    height: auto;
     display: block;
     overflow: hidden;
     position: relative;
@@ -111,10 +112,12 @@ export default {
     font-family: sans-serif;
     font-size: 0.7em;
     font-style: italic;
-    color: #71CBD0;
+    color: #000;
   }
   textarea{
     width: 100%;
-    min-height: 200px;
+  }
+  .btnsimple{
+    : 130px;
   }
 </style>
