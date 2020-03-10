@@ -1,21 +1,23 @@
 <template>
   <div id="app">
     
-    <div class="row justify-content-center my-5" >
+    
       <div id="myDIV" class="header">
           <input type="text" id="myInput" placeholder="Note..." v-model="newNote">
           <span @click="addNote" class="addBtn">Add</span>
        </div>
-    </div>
+    
 
-  <div class="row justify-content-center my-5 notescss">
+ 
       <ul id="myUL">
-        <li v-for="notes in notes" :key="notes.id">
-          <span class="text-muted time">({{notes.timestamp}})</span> - {{ notes.content }} <span class="close">x</span>
+        <li v-for="notes in notes" :key="notes.id" >
+          <span class="text-muted time">({{notes.timestamp}})</span> 
+          <span @click="updateItem(notes.id)"> - {{ notes.content }}  </span>
+          <span class="close" @click="deleteItem(notes.id)">x</span>
         </li>
       </ul>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -26,6 +28,7 @@ export default {
   data(){
     return {
       newNote: null,
+      newDone: null,
       notes: []
     }
   },
@@ -34,6 +37,7 @@ export default {
       if(this.newNote){
         db.collection('notes').add({
           content: this.newNote,
+          done: 0,
           timestamp: Date.now()
         }).catch(err => {
           console.log(err);
@@ -49,10 +53,14 @@ export default {
     deleteItem(id){
       db.collection('notes').doc(id).delete();
     },
-    updateItem(id, myContent){
+    updateItem(id){
       //console.log(this.content);
+    
+      if (this.done == 1) 
+        newDone == 1;
+      
         db.collection('notes').doc(id).update({
-          content: myContent
+          done: 1
         }).catch(err => {
           console.log(err);
         })
@@ -69,6 +77,7 @@ export default {
           this.notes.push({
             id: doc.id,
             content: doc.data().content,
+            done: null,
             timestamp: moment(doc.data().timestamp).format('LLLL')
           })
         }
