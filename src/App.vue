@@ -8,10 +8,10 @@
        </div>
     </div>
 
-  <div class="row justify-content-center my-5">
+  <div class="row justify-content-center my-5 notescss">
       <ul id="myUL">
         <li v-for="notes in notes" :key="notes.id">
-          <span class="text-muted time">({{notes.timestamp}})</span> - {{ notes.content }}
+          <span class="text-muted time">({{notes.timestamp}})</span> - {{ notes.content }} <span class="close">x</span>
         </li>
       </ul>
     </div>
@@ -82,6 +82,10 @@ export default {
   #app{
     
   }
+  .notescss{
+    width: 200px;
+  }
+
   .time{
     font-size: 0.8em;
   }
@@ -92,6 +96,7 @@ export default {
 ul {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 /* Style the list items */
@@ -146,6 +151,7 @@ ul li.checked::before {
   position: absolute;
   right: 0;
   top: 0;
+ 
   padding: 12px 16px 12px 16px;
 }
 
