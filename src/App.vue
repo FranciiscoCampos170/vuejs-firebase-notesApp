@@ -3,7 +3,7 @@
     
     
       <div id="myDIV" class="header">
-          <input type="text" id="myInput" placeholder="Note..." v-model="newNote">
+          <input type="text" id="myInput" placeholder="Notes..." v-model="newNote">
           <span @click="addNote" class="addBtn">Add</span>
        </div>
     
