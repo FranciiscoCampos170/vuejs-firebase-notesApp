@@ -11,8 +11,9 @@
  
       <ul id="myUL">
         <li v-for="notes in notes" :key="notes.id" >
-          <span class="text-muted time">({{notes.timestamp}})</span> 
-          <span @click="updateItem(notes.id)"> - {{ notes.content }} </span>
+          <span class="text-muted time"></span> 
+          <span @click="updateItem(notes.id, notes.done)" v-if="notes.done === 1" class=""> <del>({{notes.timestamp}}) - {{ notes.content }} - {{ notes.done }} </del></span>
+          <span @click="updateItem(notes.id, notes.done)" v-else class=""> ({{notes.timestamp}}) - {{ notes.content }} - {{ notes.done }} </span>
           <span class="close" @click="deleteItem(notes.id)">x</span>
           {{ notes.dones }}
         </li>
@@ -53,10 +54,15 @@ export default {
     deleteItem(id){
       db.collection('notes').doc(id).delete();
     },
-    updateItem(id){
+    updateItem(id, done){
       //console.log(this.content);
         db.collection('notes').doc(id).update({
-          done: 1
+        
+
+            done: ((done === 0) ? '1' : '0'),
+          
+
+          
         }).catch(err => {
           console.log(err);
         })
@@ -73,7 +79,7 @@ export default {
           this.notes.push({
             id: doc.id,
             content: doc.data().content,
-            done: doc.done,
+            done: doc.data().done,
             timestamp: moment(doc.data().timestamp).format('LLLL')
           })
         }
