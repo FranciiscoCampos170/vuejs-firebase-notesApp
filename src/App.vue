@@ -57,11 +57,8 @@ export default {
     updateItem(id, done){
       //console.log(this.content);
         db.collection('notes').doc(id).update({
-        
-
-            done: ((done === 0) ? '1' : '0'),
-          
-
+      
+            done: ((done === 1) ? 0 : 1), 
           
         }).catch(err => {
           console.log(err);
