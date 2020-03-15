@@ -55,7 +55,6 @@ export default {
       db.collection('notes').doc(id).delete();
     },
     updateItem(id, done){
-      //console.log(this.content);
         db.collection('notes').doc(id).update({
       
             done: ((done === 1) ? 0 : 1), 
